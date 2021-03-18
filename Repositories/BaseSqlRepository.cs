@@ -31,6 +31,11 @@
 
         public async Task<long> BulkCreateAsync(List<T> tList)
         {
+            foreach (var item in tList)
+            {
+                item.CreatedDateTime = DateTime.Now; 
+                item.UpdatedDateTime = DateTime.Now;
+            }
             var sqlQuery = new Request().CreateQuery(tList, _tableName);
 
             return await _sqlConnection.ExecuteAsync(sqlQuery.Query, sqlQuery.Values);
@@ -65,6 +70,10 @@
 
         public async Task<long> BulkUpdateAsync(List<T> tList)
         {
+            foreach (var item in tList)
+            {
+                item.UpdatedDateTime = DateTime.Now;
+            }
             var sqlQuery = new Request().UpdateQuery(tList, _tableName);
 
             return await _sqlConnection.ExecuteAsync(sqlQuery.Query, sqlQuery.Values);
@@ -156,16 +165,29 @@
             };
         }
 
-        public async Task<long> CreateAsync(T t)
+        public async Task<T> CreateAsync(T t)
         {
+            t.CreatedDateTime = DateTime.Now;
+            t.UpdatedDateTime = DateTime.Now;
+
             var sqlQuery = new Request().CreateQuery(new List<T> { t }, _tableName, new List<string> { nameof(BaseModel.Id) });
 
-            return await _sqlConnection.ExecuteAsync(sqlQuery.Query, sqlQuery.Values);
+            sqlQuery.Query = $"{sqlQuery.Query};SELECT CAST(SCOPE_IDENTITY() as int)";
+
+            var id = await _sqlConnection.QueryFirstAsync<long>(sqlQuery.Query, sqlQuery.Values);
+
+            if (id > 0)
+            {
+                return await GetAsync(id);
+            }
+
+            return null;
         }
 
         public async Task<long> UpdateAsync(long id, T t)
         {
             t.Id = id;
+            t.UpdatedDateTime = DateTime.Now;
             var request = new Request()
             {
                 Filter = new Filter

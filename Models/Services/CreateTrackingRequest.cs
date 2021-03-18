@@ -1,7 +1,5 @@
-﻿namespace Services
+﻿namespace Models
 {
-    using Models;
-    
     public class CreateTrackingRequest
     {
         public long? UserId { get; set; }

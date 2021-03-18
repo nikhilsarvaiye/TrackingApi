@@ -64,7 +64,7 @@
             return await _repository.BulkUpdateAsync(tList);
         }
 
-        public virtual async Task<long> CreateAsync(T t)
+        public virtual async Task<T> CreateAsync(T t)
         {
             await OnCreating(t);
 

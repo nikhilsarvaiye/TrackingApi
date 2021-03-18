@@ -1,4 +1,4 @@
-﻿namespace Services
+﻿namespace Models
 {
     public class UpdateTrackingStepRequest
     {

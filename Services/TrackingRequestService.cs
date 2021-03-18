@@ -16,7 +16,7 @@
         {
         }
 
-        public async Task<long> CreateAsync(CreateTrackingRequest createTrackingRequest)
+        public async Task<TrackingRequest> CreateAsync(CreateTrackingRequest createTrackingRequest)
         {
             return await base.CreateAsync(new TrackingRequest
             { 

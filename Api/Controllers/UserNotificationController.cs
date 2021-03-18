@@ -19,7 +19,7 @@
             _userNotificationService = userNotificationService ?? throw new ArgumentNullException(nameof(userNotificationService));
         }
 
-        [HttpGet("notification/{id}")]
+        [HttpGet("notification")]
         public async Task<List<UserNotification>> GetByNotificationIdAsync(long id)
         {
             return await _userNotificationService.GetByNotificationIdAsync(id);

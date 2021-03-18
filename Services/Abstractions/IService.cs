@@ -14,7 +14,7 @@
 
         Task<long> BulkUpdateAsync(List<T> tList);
 
-        Task<long> CreateAsync(T t);
+        Task<T> CreateAsync(T t);
 
         Task<List<T>> GetAsync(IRequest request = null);
 

@@ -5,7 +5,7 @@
 
     public interface ITrackingRequestService : IService<TrackingRequest>
     {
-        Task<long> CreateAsync(CreateTrackingRequest createTrackingRequest);
+        Task<TrackingRequest> CreateAsync(CreateTrackingRequest createTrackingRequest);
 
         Task<long> UpdateStepAsync(long id, UpdateTrackingStepRequest updateTrackingStepRequest);
 

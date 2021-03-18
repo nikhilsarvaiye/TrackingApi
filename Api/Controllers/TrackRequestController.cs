@@ -19,7 +19,7 @@
         }
 
         [HttpPost("create")]
-        public async Task<long> CreateAsync(CreateTrackingRequest createTrackingRequest)
+        public async Task<TrackingRequest> CreateAsync(CreateTrackingRequest createTrackingRequest)
         {
             return await _trackingRequestService.CreateAsync(createTrackingRequest);
         }

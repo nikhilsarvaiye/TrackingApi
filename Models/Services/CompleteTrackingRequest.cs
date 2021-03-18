@@ -1,7 +1,5 @@
-﻿namespace Services
+﻿namespace Models
 {
-    using Models;
-    
     public class CompleteTrackingRequest
     {
         public TrackingRequestResultType ResultType { get; set; }

@@ -3,13 +3,13 @@
     public enum TrackingRequestType
     {
         /// <summary>
-        /// Job1
+        /// DeleteUser
         /// </summary>
-        Job1 = 1,
+        DeleteUser = 1,
 
         /// <summary>
-        /// Job2
+        /// NotifyUser
         /// </summary>
-        Job2 = 2
+        NotifyUser = 2
     }
 }

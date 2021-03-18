@@ -1,5 +1,6 @@
 ﻿namespace Api.Controllers
 {
+    using DotnetStandardQueryBuilder.Core;
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using Services;
@@ -38,8 +39,14 @@
             return await _service.GetAsync(request);
         }
 
+        [HttpGet("paginate")]
+        public virtual async Task<IResponse<T>> PaginateAsync(int? pageSize = null, int page = 1)
+        {
+            return await _service.PaginateAsync(new Request { Count = true, Page = 1, PageSize = pageSize });
+        }
+
         [HttpPost]
-        public virtual async Task<long> CreateAsync(T skill)
+        public virtual async Task<T> CreateAsync(T skill)
         {
             return await _service.CreateAsync(skill);
         }
