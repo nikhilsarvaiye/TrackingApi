@@ -1,0 +1,45 @@
+﻿{
+  "$schema": "http://cachemanager.michaco.net/schemas/cachemanager.json#",
+  "redis": [
+    {
+      "key": "redisConnection",
+      "connectionString": "localhost:6379,allowAdmin=true"
+      // "connectionString": "redis-19325.cluster.local:19325 / 172.17.0.2:19325" // cluster
+    }
+  ],
+  "cacheManagers": [
+    {
+      "maxRetries": 1000,
+      "name": "retaileasy_cache",
+      "retryTimeout": 100,
+      "updateMode": "Up",
+      "backplane": {
+        "key": "redisConnection",
+        "knownType": "Redis",
+        "channelName": "test"
+      },
+      "loggerFactory": {
+        "knownType": "Microsoft"
+      },
+      "serializer": {
+        "knownType": "Json"
+      },
+      "handles": [
+        {
+          "knownType": "SystemRuntime",
+          "enablePerformanceCounters": true,
+          "enableStatistics": true,
+          "expirationMode": "Absolute",
+          "expirationTimeout": "0:0:23",
+          "isBackplaneSource": false,
+          "name": "sys cache"
+        },
+        {
+          "knownType": "Redis",
+          "key": "redisConnection",
+          "isBackplaneSource": true
+        }
+      ]
+    }
+  ]
+}

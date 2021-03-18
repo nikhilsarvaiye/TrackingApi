@@ -1,0 +1,28 @@
+﻿{
+  "$schema": "http://cachemanager.michaco.net/schemas/cachemanager.json#",
+  "cacheManagers": [
+    {
+      "maxRetries": 1000,
+      "name": "retaileasy_cache",
+      "retryTimeout": 100,
+      "updateMode": "Up",
+      "loggerFactory": {
+        "knownType": "Microsoft"
+      },
+      "serializer": {
+        "knownType": "Json"
+      },
+      "handles": [
+        {
+          "knownType": "SystemRuntime",
+          "enablePerformanceCounters": true,
+          "enableStatistics": true,
+          "expirationMode": "Absolute",
+          "expirationTimeout": "0:0:23",
+          "isBackplaneSource": false,
+          "name": "sys cache"
+        }
+      ]
+    }
+  ]
+}
