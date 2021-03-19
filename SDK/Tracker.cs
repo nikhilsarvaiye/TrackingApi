@@ -15,7 +15,7 @@
 
         public override Task<TrackingRequest> CreateAsync(TrackingRequest t)
         {
-            throw new NotImplementedException("Kindly use another method CreateAsync method with CreateTrackingRequest as input");
+            throw new NotImplementedException($"Kindly use another method CreateAsync method with {nameof(CreateTrackingRequest)} as input");
         }
 
         public async Task<TrackingRequest> CreateAsync(CreateTrackingRequest createTrackingRequest)

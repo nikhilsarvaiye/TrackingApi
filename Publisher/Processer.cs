@@ -32,11 +32,12 @@
                     Content = null // if you have any
                 });
                 */
-                Log.Information($"Adding New Tracking Entery");
+                Log.Information($"Adding New Tracker");
                 var tracker = new Tracker(serviceBusConfiguration.TrackingApi, activator);
                 await tracker.CreateAsync(new CreateTrackingRequest
                 {
-                    Type = (int)TrackingRequestType.DeleteUser
+                    Type = (int)TrackingRequestType.DeleteUser,
+                    UserId = 0,
                 });
             }
             catch (Exception exception)

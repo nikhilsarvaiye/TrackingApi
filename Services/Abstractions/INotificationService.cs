@@ -6,6 +6,8 @@
 
     public interface INotificationService : IService<Notification>
     {
+        Task<Notification> CreateAsync(CreateNotificationRequest createNotificationRequest);
+
         Task<List<Notification>> GetByTrackingRequestIdAsync(long id);
     }
 }

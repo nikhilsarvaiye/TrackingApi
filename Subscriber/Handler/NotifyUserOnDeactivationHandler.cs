@@ -1,8 +1,11 @@
 ﻿namespace Subscriber.Handler
 {
     using Models;
+    using Newtonsoft.Json;
     using Rebus.Activation;
     using Rebus.Handlers;
+    using RestSharp;
+    using SDK;
     using Serilog;
     using ServiceBus;
     using ServiceBus.Messages;
@@ -37,30 +40,35 @@
                 
                 try
                 {
-                    //var apiClient = new RestClient(_serviceBusConfiguration.Api);
+                    var apiClient = new RestClient(_serviceBusConfiguration.Api);
 
-                    //var apiUser = apiClient.Get<ApiUser>(new RestRequest($"user?id={notifyUserOnDeactivationMessage.UserId}")).Data;
+                    var apiUser = apiClient.Get<ApiUser>(new RestRequest($"user?id={trackingRequest.UserId}")).Data;
 
-                    //if (!string.IsNullOrEmpty(apiUser.Email))
-                    //{
-                    //    var notification = new SDK.Notification(_serviceBusConfiguration.TrackingApi, _activator);
+                    if (!string.IsNullOrEmpty(apiUser.Email))
+                    {
+                        var notification = new SDK.Notification(_serviceBusConfiguration.TrackingApi, _activator);
 
-                    //    var createdNotification = notification.CreateAsync(new Models.Notification
-                    //    {
-                    //        Type = NotificationMessageType.NotifyUser,
-                    //        Content = ""
-                    //    });
-                    //}
+                        var createdNotification = notification.CreateAsync(new CreateNotificationRequest
+                        {
+                            Type = (int)NotificationMessageType.NotifyUser,
+                            Content = ""
+                        });
+
+                        /// 
+                        // SendEmail
+                    }
                 }
                 catch (Exception exception)
                 {
-                    Log.Error(exception, "Error in " + nameof(DeleteUserHandler));
-                    //var tracker = new Tracker(_serviceBusConfiguration.TrackingApi, _activator);
-                    //await tracker.CompleteAsync(notifyUserOnDeactivationMessage.TrackerId, new CompleteTrackingRequest
-                    //{
-                    //    ResultType = TrackingRequestResultType.Failed,
-                    //    ResultDetails = new Exception(exception.Message, exception)
-                    //});
+                    Log.Error(exception, "Error in " + nameof(NotifyUserOnDeactivationHandler));
+
+                    Log.Information($"Marking {nameof(TrackingRequest)} Id - {trackingRequest.Id} as Failed");
+                    
+                    await new Tracker(_serviceBusConfiguration.TrackingApi, _activator).CompleteAsync(trackingRequest.Id, new CompleteTrackingRequest
+                    {
+                        ResultType = TrackingRequestResultType.Failed,
+                        ResultDetails = exception.Message + JsonConvert.SerializeObject(exception.StackTrace)
+                    });
                 }
             }
         }

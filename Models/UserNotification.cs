@@ -9,7 +9,7 @@
 		public long UserId { get; set; }
 
 		[DataMember]
-		public int NotificationId { get; set; }
+		public long NotificationId { get; set; }
 
 		[DataMember]
 		public bool IsRead { get; set; }

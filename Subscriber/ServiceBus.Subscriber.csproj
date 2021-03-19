@@ -50,6 +50,9 @@
     <Reference Include="Rebus.SqlServer, Version=6.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rebus.SqlServer.6.1.2\lib\net45\Rebus.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.9.0\lib\net45\Serilog.dll</HintPath>
     </Reference>
@@ -90,6 +93,10 @@
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{8ec5c1cf-3b7a-43cb-be5c-8117d0ae028d}</Project>
       <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDK\SDK.csproj">
+      <Project>{a5be43fe-dca8-499c-9a81-0ba3fd897208}</Project>
+      <Name>SDK</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

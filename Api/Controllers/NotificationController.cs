@@ -18,7 +18,13 @@
         {
             _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
         }
-        
+
+        [HttpPost("create")]
+        public async Task<Notification> CreateAsync(CreateNotificationRequest createNotificationRequest)
+        {
+            return await _notificationService.CreateAsync(createNotificationRequest);
+        }
+
         [HttpGet("request")]
         public async Task<List<Notification>> GetByTrackingRequestIdAsync(long id)
         {

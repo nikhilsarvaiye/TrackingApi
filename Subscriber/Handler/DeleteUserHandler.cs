@@ -1,8 +1,11 @@
 ﻿namespace Subscriber.Handler
 {
     using Models;
+    using Newtonsoft.Json;
     using Rebus.Activation;
     using Rebus.Handlers;
+    using RestSharp;
+    using SDK;
     using Serilog;
     using ServiceBus;
     using ServiceBus.Messages;
@@ -37,30 +40,30 @@
 
                 try
                 {
-                    //Log.Information("Received DeleteUserMessage: {0}", trackingRequest.UserId);
+                    var apiClient = new RestClient(_serviceBusConfiguration.Api);
 
-                    //var apiClient = new RestClient(_serviceBusConfiguration.Api);
+                    var deleted = apiClient.Delete<bool>(new RestRequest($"user?id={trackingRequest.UserId}")).Data;
 
-                    //var deleted = apiClient.Delete<bool>(new RestRequest($"user?id={deleteUserMessage.UserId}")).Data;
-
-                    //if (deleted)
-                    //{
-                    //    var tracker = new Tracker(_serviceBusConfiguration.TrackingApi, _activator);
-                    //    var trackerRequest = await tracker.CompleteAsync(deleteUserMessage.TrackerId, new CompleteTrackingRequest
-                    //    {
-                    //        ResultType = TrackingRequestResultType.Success
-                    //    });
-                    //}
+                    if (deleted)
+                    {
+                        var tracker = new Tracker(_serviceBusConfiguration.TrackingApi, _activator);
+                        var trackerRequest = await tracker.CompleteAsync(trackingRequest.Id, new CompleteTrackingRequest
+                        {
+                            ResultType = TrackingRequestResultType.Success
+                        });
+                    }
                 }
                 catch (Exception exception)
                 {
                     Log.Error(exception, "Error in " + nameof(DeleteUserHandler));
-                    //var tracker = new Tracker(_serviceBusConfiguration.TrackingApi, _activator);
-                    //await tracker.CompleteAsync(deleteUserMessage.TrackerId, new CompleteTrackingRequest
-                    //{
-                    //    ResultType = TrackingRequestResultType.Failed,
-                    //    ResultDetails = new Exception(exception.Message, exception)
-                    //});
+
+                    Log.Information($"Marking {nameof(TrackingRequest)} Id - {trackingRequest.Id} as Failed");
+
+                    await new Tracker(_serviceBusConfiguration.TrackingApi, _activator).CompleteAsync(trackingRequest.Id, new CompleteTrackingRequest
+                    {
+                        ResultType = TrackingRequestResultType.Failed,
+                        ResultDetails = exception.Message + JsonConvert.SerializeObject(exception.StackTrace)
+                    });
                 }
             }
         }

@@ -30,9 +30,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Publisher", "Pub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Subscriber", "Subscriber\ServiceBus.Subscriber.csproj", "{F193B009-A056-47BA-A3A2-DD827CCDD9FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus.Messages", "Messages\ServiceBus.Messages.csproj", "{20993FC6-594E-463D-AFF3-6D40B91ACA33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBus.Messages", "Messages\ServiceBus.Messages.csproj", "{20993FC6-594E-463D-AFF3-6D40B91ACA33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "SDK\SDK.csproj", "{A5BE43FE-DCA8-499C-9A81-0BA3FD897208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDK", "SDK\SDK.csproj", "{A5BE43FE-DCA8-499C-9A81-0BA3FD897208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

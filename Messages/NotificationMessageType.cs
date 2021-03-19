@@ -1,16 +1,15 @@
-﻿namespace Models
+﻿namespace ServiceBus.Messages
 {
     public enum NotificationMessageType
     {
         /// <summary>
-        /// NotificationType1
+        /// DeleteUser
         /// </summary>
-        NotificationType1 = 1,
-
+        DeleteUser = 1,
 
         /// <summary>
-        /// NotificationType2
+        /// NotifyUser
         /// </summary>
-        NotificationType2 = 2
+        NotifyUser = 2
     }
 }
