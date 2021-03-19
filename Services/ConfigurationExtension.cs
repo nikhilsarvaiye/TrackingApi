@@ -13,12 +13,12 @@
 
             if (true || appOptions.Cache)
             {
-                services.AddScoped<ICacheService<TrackingRequest>, CacheService<TrackingRequest>>();
+                services.AddScoped<ICacheService<TrackerRequest>, CacheService<TrackerRequest>>();
                 services.AddScoped<ICacheService<Notification>, CacheService<Notification>>();
                 services.AddScoped<ICacheService<UserNotification>, CacheService<UserNotification>>();
             }
 
-            services.AddScoped<ITrackingRequestService, TrackingRequestService>();
+            services.AddScoped<ITrackerRequestService, TrackerRequestService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IUserNotificationService, UserNotificationService>();
 

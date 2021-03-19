@@ -12,7 +12,7 @@
     using System;
     using System.Threading.Tasks;
     
-    public class NotifyUserOnDeactivationHandler : IHandleMessages<TrackingRequest>
+    public class NotifyUserOnDeactivationHandler : IHandleMessages<TrackerRequest>
     {
         private readonly ServiceBusConfiguration _serviceBusConfiguration;
 
@@ -25,18 +25,18 @@
             {
                 throw new ArgumentNullException(nameof(ServiceBusConfiguration.Api));
             }
-            if (string.IsNullOrEmpty(serviceBusConfiguration?.TrackingApi))
+            if (string.IsNullOrEmpty(serviceBusConfiguration?.TrackerApi))
             {
-                throw new ArgumentNullException(nameof(ServiceBusConfiguration.TrackingApi));
+                throw new ArgumentNullException(nameof(ServiceBusConfiguration.TrackerApi));
             }
             _activator = activator;
         }
 
-        public async Task Handle(TrackingRequest trackingRequest)
+        public async Task Handle(TrackerRequest trackingRequest)
         {
-            if (trackingRequest.Type == (int)TrackingRequestType.NotifyUser)
+            if (trackingRequest.Type == (int)TrackerRequestType.NotifyUser)
             {
-                Log.Information($"Received {nameof(TrackingRequest)} in {nameof(NotifyUserOnDeactivationHandler)}: Id - {trackingRequest.Id}");
+                Log.Information($"Received {nameof(TrackerRequest)} in {nameof(NotifyUserOnDeactivationHandler)}: Id - {trackingRequest.Id}");
                 
                 try
                 {
@@ -46,7 +46,7 @@
 
                     if (!string.IsNullOrEmpty(apiUser.Email))
                     {
-                        var notification = new SDK.Notification(_serviceBusConfiguration.TrackingApi, _activator);
+                        var notification = new SDK.Notification(_serviceBusConfiguration.TrackerApi, _activator);
 
                         var createdNotification = notification.CreateAsync(new CreateNotificationRequest
                         {
@@ -62,11 +62,11 @@
                 {
                     Log.Error(exception, "Error in " + nameof(NotifyUserOnDeactivationHandler));
 
-                    Log.Information($"Marking {nameof(TrackingRequest)} Id - {trackingRequest.Id} as Failed");
+                    Log.Information($"Marking {nameof(TrackerRequest)} Id - {trackingRequest.Id} as Failed");
                     
-                    await new Tracker(_serviceBusConfiguration.TrackingApi, _activator).CompleteAsync(trackingRequest.Id, new CompleteTrackingRequest
+                    await new Tracker(_serviceBusConfiguration.TrackerApi, _activator).CompleteAsync(trackingRequest.Id, new CompleteTrackerRequest
                     {
-                        ResultType = TrackingRequestResultType.Failed,
+                        ResultType = TrackerRequestResultType.Failed,
                         ResultDetails = exception.Message + JsonConvert.SerializeObject(exception.StackTrace)
                     });
                 }

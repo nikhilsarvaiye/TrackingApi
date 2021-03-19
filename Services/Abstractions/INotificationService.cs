@@ -8,6 +8,6 @@
     {
         Task<Notification> CreateAsync(CreateNotificationRequest createNotificationRequest);
 
-        Task<List<Notification>> GetByTrackingRequestIdAsync(long id);
+        Task<List<Notification>> GetByTrackerRequestIdAsync(long id);
     }
 }

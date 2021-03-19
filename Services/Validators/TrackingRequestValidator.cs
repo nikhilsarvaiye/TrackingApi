@@ -3,9 +3,9 @@
     using FluentValidation;
     using Models;
 
-    public class TrackingRequestValidator : AbstractValidator<TrackingRequest>
+    public class TrackerRequestValidator : AbstractValidator<TrackerRequest>
     {
-        public TrackingRequestValidator()
+        public TrackerRequestValidator()
         {
             CascadeMode = CascadeMode.Stop;
 

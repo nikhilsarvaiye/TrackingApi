@@ -1,5 +1,5 @@
 ﻿
-CREATE TABLE [TrackingRequest] (
+CREATE TABLE [TrackerRequest] (
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[UserId] [int] NULL,
 	[Type] [int] NOT NULL,
@@ -45,6 +45,6 @@ CREATE TABLE [UserNotification] (
 ) 
 GO
 
---- DROP TABLE [TrackingRequest]
+--- DROP TABLE [TrackerRequest]
 --- DROP TABLE [Notification]
 --- DROP TABLE [UserNotification]

@@ -13,7 +13,7 @@
 
         public string BackPlaneDatabaseTableName { get; set; } = "Subscriptions";
 
-        public string TrackingApi { get; set; }
+        public string TrackerApi { get; set; }
 
         public string Api { get; set; }
 
@@ -21,7 +21,7 @@
         {
             Queue = appSettings.Get(nameof(Queue));
             Subscriber = appSettings.Get(nameof(Subscriber));
-            TrackingApi = appSettings.Get(nameof(TrackingApi));
+            TrackerApi = appSettings.Get(nameof(TrackerApi));
             Api = appSettings.Get(nameof(Api));
             BackPlaneSqlConnectionString = connectionStrings[nameof(BackPlaneSqlConnectionString)]?.ToString();
         }

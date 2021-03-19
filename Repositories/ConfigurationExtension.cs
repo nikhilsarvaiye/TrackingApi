@@ -8,7 +8,7 @@
         {
             services.AddScoped<IUserNotificationRepository, UserNotificationRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
-            services.AddScoped<IUserRepository, TrackingRequestRepository>();
+            services.AddScoped<ITrackerRepository, TrackerRequestRepository>();
 
             return services;
         }

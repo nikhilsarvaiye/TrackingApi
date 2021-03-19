@@ -1,6 +1,6 @@
 ﻿namespace Models
 {
-    public class CreateTrackingRequest
+    public class CreateTrackerRequest
     {
         public long? UserId { get; set; }
 

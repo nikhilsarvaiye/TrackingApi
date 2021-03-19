@@ -43,10 +43,10 @@
                             .Logging(l => l.Serilog())
                             .Transport(t => t.UseMsmq(serviceBusConfiguration.Subscriber))
                             .Subscriptions(s => s.StoreInSqlServer(serviceBusConfiguration.BackPlaneSqlConnectionString, serviceBusConfiguration.BackPlaneDatabaseTableName, isCentralized: true))
-                            // .Routing(r => r.TypeBased().Map<TrackingRequest>(""))
+                            // .Routing(r => r.TypeBased().Map<TrackerRequest>(""))
                             .Start();
 
-                        activator.Bus.Subscribe<TrackingRequest>().Wait();
+                        activator.Bus.Subscribe<TrackerRequest>().Wait();
 
                         _quitEvent.WaitOne();
                     }

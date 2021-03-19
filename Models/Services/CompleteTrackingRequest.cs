@@ -1,8 +1,8 @@
 ﻿namespace Models
 {
-    public class CompleteTrackingRequest
+    public class CompleteTrackerRequest
     {
-        public TrackingRequestResultType ResultType { get; set; }
+        public TrackerRequestResultType ResultType { get; set; }
 
         public object ResultDetails { get; set; }
     }

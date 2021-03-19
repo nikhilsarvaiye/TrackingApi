@@ -1,6 +1,6 @@
 ﻿namespace ServiceBus.Messages
 {
-    public enum TrackingRequestType
+    public enum TrackerRequestType
     {
         /// <summary>
         /// DeleteUser

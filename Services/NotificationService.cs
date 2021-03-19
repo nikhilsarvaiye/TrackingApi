@@ -51,7 +51,7 @@
             return notification;
         }
 
-        public async Task<List<Notification>> GetByTrackingRequestIdAsync(long id)
+        public async Task<List<Notification>> GetByTrackerRequestIdAsync(long id)
         {
             var request = new Request
             {

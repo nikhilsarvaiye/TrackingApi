@@ -12,7 +12,7 @@
     using System;
     using System.Threading.Tasks;
 
-    public class DeleteUserHandler : IHandleMessages<TrackingRequest>
+    public class DeleteUserHandler : IHandleMessages<TrackerRequest>
     {
         private readonly ServiceBusConfiguration _serviceBusConfiguration;
 
@@ -25,18 +25,18 @@
             {
                 throw new ArgumentNullException(nameof(ServiceBusConfiguration.Api));
             }
-            if (string.IsNullOrEmpty(serviceBusConfiguration?.TrackingApi))
+            if (string.IsNullOrEmpty(serviceBusConfiguration?.TrackerApi))
             {
-                throw new ArgumentNullException(nameof(ServiceBusConfiguration.TrackingApi));
+                throw new ArgumentNullException(nameof(ServiceBusConfiguration.TrackerApi));
             }
             _activator = activator;
         }
 
-        public async Task Handle(TrackingRequest trackingRequest)
+        public async Task Handle(TrackerRequest trackingRequest)
         {
-            if (trackingRequest.Type == (int)TrackingRequestType.DeleteUser)
+            if (trackingRequest.Type == (int)TrackerRequestType.DeleteUser)
             {
-                Log.Information($"Received {nameof(TrackingRequest)} in {nameof(DeleteUserHandler)}: Id - {trackingRequest.Id}");
+                Log.Information($"Received {nameof(TrackerRequest)} in {nameof(DeleteUserHandler)}: Id - {trackingRequest.Id}");
 
                 try
                 {
@@ -46,10 +46,10 @@
 
                     if (deleted)
                     {
-                        var tracker = new Tracker(_serviceBusConfiguration.TrackingApi, _activator);
-                        var trackerRequest = await tracker.CompleteAsync(trackingRequest.Id, new CompleteTrackingRequest
+                        var tracker = new Tracker(_serviceBusConfiguration.TrackerApi, _activator);
+                        var trackerRequest = await tracker.CompleteAsync(trackingRequest.Id, new CompleteTrackerRequest
                         {
-                            ResultType = TrackingRequestResultType.Success
+                            ResultType = TrackerRequestResultType.Success
                         });
                     }
                 }
@@ -57,11 +57,11 @@
                 {
                     Log.Error(exception, "Error in " + nameof(DeleteUserHandler));
 
-                    Log.Information($"Marking {nameof(TrackingRequest)} Id - {trackingRequest.Id} as Failed");
+                    Log.Information($"Marking {nameof(TrackerRequest)} Id - {trackingRequest.Id} as Failed");
 
-                    await new Tracker(_serviceBusConfiguration.TrackingApi, _activator).CompleteAsync(trackingRequest.Id, new CompleteTrackingRequest
+                    await new Tracker(_serviceBusConfiguration.TrackerApi, _activator).CompleteAsync(trackingRequest.Id, new CompleteTrackerRequest
                     {
-                        ResultType = TrackingRequestResultType.Failed,
+                        ResultType = TrackerRequestResultType.Failed,
                         ResultDetails = exception.Message + JsonConvert.SerializeObject(exception.StackTrace)
                     });
                 }
