@@ -38,14 +38,29 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Rebus, Version=6.5.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rebus.6.5.5\lib\net45\Rebus.dll</HintPath>
+    <Reference Include="Rebus, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.6.0.0\lib\net45\Rebus.dll</HintPath>
     </Reference>
     <Reference Include="Rebus.Msmq, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rebus.Msmq.6.0.0\lib\net45\Rebus.Msmq.dll</HintPath>
     </Reference>
+    <Reference Include="Rebus.Serilog, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.Serilog.6.0.0\lib\net45\Rebus.Serilog.dll</HintPath>
+    </Reference>
     <Reference Include="Rebus.SqlServer, Version=6.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rebus.SqlServer.6.1.2\lib\net45\Rebus.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.9.0\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Settings.AppSettings, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Settings.AppSettings.2.2.2\lib\net45\Serilog.Settings.AppSettings.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console, Version=3.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.Console.3.1.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.1.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -58,7 +73,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handler\TrackingRequestHandler.cs" />
     <Compile Include="Handler\NotifyUserOnDeactivationHandler.cs" />
     <Compile Include="Handler\DeleteUserHandler.cs" />
     <Compile Include="Program.cs" />
@@ -78,5 +92,6 @@
       <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

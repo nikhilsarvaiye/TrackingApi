@@ -4,7 +4,7 @@
     {
         public long? UserId { get; set; }
 
-        public TrackingRequestType Type { get; set; }
+        public int Type { get; set; }
 
         public string MetaDeta1 { get; set; }
 

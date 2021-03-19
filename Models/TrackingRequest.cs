@@ -9,7 +9,7 @@
         public long? UserId { get; set; }
 
         [DataMember]
-        public TrackingRequestType Type { get; set; }
+        public int Type { get; set; }
 
         [DataMember]
         public string MetaDeta1 { get; set; }

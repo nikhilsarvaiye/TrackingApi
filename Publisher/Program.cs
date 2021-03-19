@@ -8,62 +8,52 @@
     using Models;
     using SDK;
     using System.Threading.Tasks;
-    using Publisher;
     using global::Publisher;
+    using ServiceBus.Messages;
+    using Serilog;
 
     class Program
     {
         static void Main()
         {
-            var serviceBusConfiguration = new ServiceBusConfiguration(ConfigurationManager.AppSettings, ConfigurationManager.ConnectionStrings);
-
-            using (var activator = new BuiltinHandlerActivator())
+            using (var logger = new LoggerConfiguration()
+                           .MinimumLevel.Debug()
+                           .ReadFrom.AppSettings()
+                           .WriteTo.Console()
+                           .CreateLogger())
             {
-                Configure.With(activator)
-                    .Logging(l => l.ColoredConsole(minLevel: LogLevel.Warn))
-                    .Transport(t => t.UseMsmq(serviceBusConfiguration.Queue))
-                    .Subscriptions(s => s.StoreInSqlServer(serviceBusConfiguration.BackPlaneSqlConnectionString, serviceBusConfiguration.BackPlaneDatabaseTableName, isCentralized: true))
-                    .Start();
+                Log.Logger = logger;
 
-                // Process working
-                Task.Run(async () => { 
-                    await Processer.Process(serviceBusConfiguration, activator);
-                });
+                Log.Logger.Information("-------Starting Application-------");
 
-                /* test code below */
-                while (true)
+                try
                 {
-                    Console.WriteLine(@"Enter
-                                        a) Publish
-                                        q) Quit");
+                    var serviceBusConfiguration = new ServiceBusConfiguration(ConfigurationManager.AppSettings, ConfigurationManager.ConnectionStrings);
 
-                    var keyChar = char.ToLower(Console.ReadKey(true).KeyChar);
-                    var bus = activator.Bus.Advanced.SyncBus;
-
-                    switch (keyChar)
+                    using (var activator = new BuiltinHandlerActivator())
                     {
-                        case 'a':
-                            Task.Run(async () =>
-                            {
-                                var tracker = new Tracker(serviceBusConfiguration.TrackingApi, activator); 
-                                var request = await tracker.CreateAsync(new CreateTrackingRequest
-                                {
-                                    Type = TrackingRequestType.DeleteUser
-                                });
-                            });
-                            break;
+                        Configure.With(activator)
+                            .Logging(l => l.Serilog(Log.Logger))
+                            .Transport(t => t.UseMsmq(serviceBusConfiguration.Queue))
+                            .Subscriptions(s => s.StoreInSqlServer(serviceBusConfiguration.BackPlaneSqlConnectionString, serviceBusConfiguration.BackPlaneDatabaseTableName, isCentralized: true))
+                            .Start();
 
-                        case 'q':
-                            goto consideredHarmful;
-
-                        default:
-                            Console.WriteLine($"There's no option '{keyChar}'");
-                            break;
+                        Task.Run(async () =>
+                        {
+                            await Processer.Process(serviceBusConfiguration, activator);
+                        })
+                        .Wait();
                     }
                 }
-
-            consideredHarmful:;
-                Console.WriteLine("Quitting!");
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Something went wrong");
+                }
+                finally
+                {
+                    Log.CloseAndFlush();
+                    Log.Logger.Information("-------Closing Application-------");
+                }
             }
         }
     }

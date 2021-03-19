@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace ServiceBus.Messages
 {
     public enum TrackingRequestType
     {
